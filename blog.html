@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Blog | SHYAKA Aimable</title>
+    <meta
+      name="description"
+      content="Read SHYAKA Aimable's articles covering programming tips, web development, cybersecurity, and student journey updates."
+    />
+    <link rel="stylesheet" href="assets/css/style.css" />
+    <script defer src="assets/js/main.js"></script>
+  </head>
+  <body data-page="blog">
+    <nav class="navbar">
+      <div class="logo">Aimable.dev</div>
+      <button class="nav-toggle" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+      </button>
+      <ul class="nav-links">
+        <li><a href="index.html#home">Home</a></li>
+        <li><a href="index.html#about">About</a></li>
+        <li><a href="index.html#projects">Projects</a></li>
+        <li><a href="blog.html" class="active">Blog</a></li>
+        <li><a href="index.html#contact">Contact</a></li>
+      </ul>
+      <button class="theme-toggle" aria-label="Toggle theme">
+        <span class="sun">☀</span>
+        <span class="moon">☾</span>
+      </button>
+    </nav>
+
+    <header class="blog-hero">
+      <div class="container">
+        <p class="eyebrow">Blog</p>
+        <h1>Ideas, shipped products, and lessons from the lab.</h1>
+        <p>
+          Covering Programming Tips, Web Development, Cybersecurity, My School Journey, and Project Updates.
+        </p>
+      </div>
+    </header>
+
+    <section class="container">
+      <div class="blog-filters">
+        <button class="filter-btn active" data-category="All">All</button>
+        <button class="filter-btn" data-category="Programming Tips">Programming Tips</button>
+        <button class="filter-btn" data-category="Web Development">Web Development</button>
+        <button class="filter-btn" data-category="Cybersecurity">Cybersecurity</button>
+        <button class="filter-btn" data-category="My School Journey">My School Journey</button>
+        <button class="filter-btn" data-category="Project Updates">Project Updates</button>
+      </div>
+      <div class="blog-grid" id="blogList"></div>
+    </section>
+
+    <footer class="footer">
+      <div class="container footer-grid">
+        <div>
+          <h3>Aimable.dev</h3>
+          <p>Building reliable digital systems for Africa and beyond.</p>
+        </div>
+        <div>
+          <h4>Quick Links</h4>
+          <ul>
+            <li><a href="index.html#about">About</a></li>
+            <li><a href="index.html#projects">Projects</a></li>
+            <li><a href="index.html#services">Services</a></li>
+            <li><a href="blog.html">Blog</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4>Contact</h4>
+          <ul>
+            <li><a href="mailto:aimableshyaka@gmail.com">Email</a></li>
+            <li><a href="https://github.com/huguka" target="_blank" rel="noopener">GitHub</a></li>
+            <li><a href="https://www.linkedin.com/in/shyaka-aimable" target="_blank" rel="noopener">LinkedIn</a></li>
+          </ul>
+        </div>
+      </div>
+      <p class="copyright">
+        © <span id="year"></span> SHYAKA Aimable. All rights reserved.
+      </p>
+    </footer>
+  </body>
+</html>
+
