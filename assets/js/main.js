@@ -246,13 +246,65 @@ if (detailContainer) {
   `;
 }
 
-/* Contact form placeholder */
+/* EmailJS Integration */
+emailjs.init("JSL3QlS_LCyfNb0Cb");
+
+/* Contact form */
 const form = document.querySelector(".contact-form");
 if (form) {
-  form.addEventListener("submit", (e) => {
+  form.addEventListener("submit", async (e) => {
     e.preventDefault();
-    alert("Thank you! I will get back to you shortly.");
-    form.reset();
+    
+    const submitBtn = form.querySelector('button[type="submit"]');
+    const originalText = submitBtn.textContent;
+    
+    // Disable button and show loading state
+    submitBtn.disabled = true;
+    submitBtn.textContent = "Sending...";
+    
+    try {
+      const userName = form.querySelector('input[name="name"]').value;
+      const userEmail = form.querySelector('input[name="email"]').value;
+      const projectType = form.querySelector('select[name="project"]').value;
+      const userMessage = form.querySelector('textarea[name="message"]').value;
+      
+      // Auto-reply to user
+      const autoReplyData = {
+        name: userName,
+        email: userEmail,
+        title: projectType,
+        message: userMessage,
+      };
+      
+      // Notification to owner (you) - using same template, sending to your email
+      const notificationData = {
+        name: userName,
+        email: "shyakaaimable07@gmail.com", // Your email address
+        title: `New Contact: ${projectType}`,
+        message: `Contact Form Submission:\n\nName: ${userName}\nEmail: ${userEmail}\nProject Type: ${projectType}\n\nMessage:\n${userMessage}`,
+      };
+      
+      // Send both emails using the same template
+      await Promise.all([
+        // Auto-reply to user
+        emailjs.send("service_6bk47ho", "template_ufszpfe", autoReplyData),
+        // Notification to owner (you)
+        emailjs.send("service_6bk47ho", "template_ufszpfe", notificationData)
+          .catch(err => {
+            // If notification fails, log but don't fail the whole submission
+            console.error("Notification email failed:", err);
+          })
+      ]);
+      
+      alert("Thank you! I've received your message and will get back to you shortly.");
+      form.reset();
+    } catch (error) {
+      console.error("EmailJS Error:", error);
+      alert("Oops! Something went wrong. Please try again or contact me directly at shyakaaimable07@gmail.com");
+    } finally {
+      submitBtn.disabled = false;
+      submitBtn.textContent = originalText;
+    }
   });
 }
 
