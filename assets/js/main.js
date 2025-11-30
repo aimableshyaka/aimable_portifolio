@@ -268,33 +268,37 @@ if (form) {
       const projectType = form.querySelector('select[name="project"]').value;
       const userMessage = form.querySelector('textarea[name="message"]').value;
       
-      // Auto-reply to user
+      // Auto-reply to user (sender) - goes to the person who filled the form
       const autoReplyData = {
         name: userName,
-        email: userEmail,
+        email: userEmail, // Sender's email - auto-reply goes to them
         title: projectType,
         message: userMessage,
       };
       
-      // Notification to owner (you) - using same template, sending to your email
+      // Notification to owner (you) - includes ALL form data
+      // This email goes to YOU (shyakaaimable07@gmail.com) with all the form submission details
+      // Using template_s1zm645 which shows all the details
+      // Note: email field is set to YOUR email so the notification goes to you, not the client
       const notificationData = {
-        name: userName,
-        email: "shyakaaimable07@gmail.com", // Your email address
-        title: `New Contact: ${projectType}`,
-        message: `Contact Form Submission:\n\nName: ${userName}\nEmail: ${userEmail}\nProject Type: ${projectType}\n\nMessage:\n${userMessage}`,
+        name: `${userName} (${userEmail})`, // Sender's name with their email
+        email: "shyakaaimable07@gmail.com", // YOUR email - so notification goes to you
+        project: projectType, // Project type (matches template variable {{project}})
+        message: userMessage, // The message they sent
       };
       
-      // Send both emails using the same template
-      await Promise.all([
-        // Auto-reply to user
-        emailjs.send("service_6bk47ho", "template_ufszpfe", autoReplyData),
-        // Notification to owner (you)
-        emailjs.send("service_6bk47ho", "template_ufszpfe", notificationData)
-          .catch(err => {
-            // If notification fails, log but don't fail the whole submission
-            console.error("Notification email failed:", err);
-          })
-      ]);
+      // Send both emails using different templates
+      // Auto-reply to user (sender) - goes to their email with existing template
+      console.log("Sending auto-reply to:", userEmail);
+      const autoReplyPromise = emailjs.send("service_6bk47ho", "template_ufszpfe", autoReplyData);
+      
+      // Notification to owner (you) - goes to your email with all form details
+      // Using template_s1zm645 which displays: name, email, project, and message
+      console.log("Sending notification to: shyakaaimable07@gmail.com");
+      const notificationPromise = emailjs.send("service_6bk47ho", "template_s1zm645", notificationData);
+      
+      await Promise.all([autoReplyPromise, notificationPromise]);
+      console.log("Both emails sent successfully!");
       
       alert("Thank you! I've received your message and will get back to you shortly.");
       form.reset();
